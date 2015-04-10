@@ -1,7 +1,5 @@
-jQuery Morse Code
+jQuery Morse Code for knitting
 
-jQuery plugin that encodes strings (characters) into Morse Code characters, and vice versa.
+jQuery plugin that encodes strings (characters) into Morse Code characters, and vice versa. Coded for knitting.
 
-Licensed under GPL.
-
-2010, Murilo Santana <mvrilo@gmail.com>
+Based on Murilo Santana's plugin
