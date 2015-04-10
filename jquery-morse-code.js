@@ -4,9 +4,11 @@
  *
  * Copyright (c) 2010, Murilo Santana <mvrilo@gmail.com>
  * Licensed under GPL <http://www.gnu.org/licenses/gpl.html>
+ 
+ * Rewritten for knitting purposes by Elaine Nelson, 2015.
  *
  * Example:
- *	$.morse('test', 'encode');	// to decode a string just change the second argument to 'decode'
+ *	$.morse('test', 'encode');	// to decode a string just change the third argument to 'decode'
  * or:
  *	$.morse('test');	// 'encode' is default
  * Returns:
