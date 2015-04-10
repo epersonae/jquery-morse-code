@@ -15,7 +15,7 @@
 
 (function($){
 	$.extend({
-		morse : function(string, option){
+		morse : function(string, stitches, option){
 
 			// All characters based on Wikipedia <http://en.wikipedia.org/wiki/Morse_code#Letters.2C_numbers.2C_punctuation>
 			var key = [' ','.',',','?',"'",'!','/','(',')','&',	// special chars
@@ -48,6 +48,15 @@
 				if (res.match(/undefined/gi)){
 					res = '&nbsp;';
 				}
+				
+				var total = res.length;
+				var totalString = total.toString();
+				var rows = total/stitches;
+				
+				var stRows = rows.toString();
+				
+				res += "<br/>" + stRows + " rows";
+				
 			}
 			else if (option === "decode"){
 				if (!str.match(/[^\.\s\-\/]+/g)){
