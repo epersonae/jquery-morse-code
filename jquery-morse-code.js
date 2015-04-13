@@ -27,7 +27,7 @@
 			'a','b','c','d','e','f','g','h','i','j','k','l','m',	// letters
 			'n','o','p','q','r','s','t','u','v','w','x','y','z'];	// letters
 
-			var val = ['<br/>','▣□▣▣▣□▣□▣▣▣□▣□▣▣▣','▣▣▣□▣▣▣□▣□▣□▣▣▣□▣▣▣','▣□▣□▣▣▣□▣▣▣□▣□▣','▣□▣▣▣□▣▣▣□▣▣▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣□▣▣▣□▣▣▣','▣▣▣□▣□▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣▣▣□▣□▣▣▣','▣□▣▣▣□▣□▣□▣',	// special chars
+			var val = ['space','▣□▣▣▣□▣□▣▣▣□▣□▣▣▣','▣▣▣□▣▣▣□▣□▣□▣▣▣□▣▣▣','▣□▣□▣▣▣□▣▣▣□▣□▣','▣□▣▣▣□▣▣▣□▣▣▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣□▣▣▣□▣▣▣','▣▣▣□▣□▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣▣▣□▣','▣▣▣□▣□▣▣▣□▣▣▣□▣□▣▣▣','▣□▣▣▣□▣□▣□▣',	// special chars
 			'▣▣▣□▣▣▣□▣▣▣□▣□▣□▣','▣▣▣□▣□▣▣▣□▣□▣▣▣□▣','▣▣▣□▣□▣□▣□▣▣▣','▣□▣▣▣□▣□▣▣▣□▣','▣▣▣□▣□▣□▣□▣□▣▣▣','▣□▣□▣▣▣□▣▣▣□▣□▣▣▣','▣□▣▣▣□▣□▣□▣▣▣□▣','▣□▣□▣□▣▣▣□▣□▣□▣▣▣','▣□▣▣▣□▣▣▣□▣□▣▣▣□▣',		// special chars
 			'▣▣▣□▣▣▣□▣▣▣□▣▣▣□▣▣▣','▣□▣▣▣□▣▣▣□▣▣▣□▣▣▣','▣□▣□▣▣▣□▣▣▣□▣▣▣','▣□▣□▣□▣▣▣□▣▣▣','▣□▣□▣□▣□▣▣▣','▣□▣□▣□▣□▣','▣▣▣□▣□▣□▣□▣','▣▣▣□▣▣▣□▣□▣□▣','▣▣▣□▣▣▣□▣▣▣□▣□▣','▣▣▣□▣▣▣□▣▣▣□▣▣▣□▣',		// numbers
 			'▣□▣▣▣□▣□▣▣▣','▣□▣▣▣□▣▣▣□▣□▣▣▣','▣▣▣□▣□▣▣▣□▣□▣','▣▣▣□▣▣▣□▣▣▣□▣▣▣','▣□▣□▣▣▣□▣▣▣□▣','▣□▣□▣□▣▣▣□▣□▣□▣','▣□▣▣▣□▣□▣□▣▣▣','▣□▣□▣▣▣□▣□▣','▣▣▣□▣▣▣□▣□▣▣▣□▣▣▣','▣□▣□▣□▣▣▣□▣','▣□▣▣▣□▣▣▣□▣□▣','▣□▣□▣▣▣□▣▣▣',	// few non-latin letters
@@ -36,6 +36,9 @@
 			var str = string.toLowerCase();
 			var enc = str.match(/[\-\.\/]+/g);
 			var res = '';
+			var pattern = '';
+			var lineResult = '';
+			var tempResult = '';
 
 			if (str.length === 0){
 				return false;
@@ -43,9 +46,51 @@
 
 			if (option === "encode" || option === undefined){
 				$.each(str, function(index,value){
+					
+					
 					var i = $.inArray(value, key);
-					res += val[i] + '□□□';
+					
+					//if this is a word break and adding the next letter would make it longer than the number of stitches
+					//add the old one to the array and start a new array item
+					//also, if this is a word break, add word break stitches instead of letter break stitches, unless this is a line break.
+					
+					if(val[i] == 'space') {
+						//lineResult = lineResult + '□□□□□□';
+						//temporary value to see how long the line will be when the next word starts
+						tempResult = lineResult + '□□□□□□';
+						var tempResultLength = tempResult.length;
+						
+						var lineLengthTrimmed = lineResult.length-3; // since every character has three spaces after
+						
+						//if the spaces make it longer than the number of stitches
+						//start a new line and clear the line
+						if(tempResultLength > stitches) {
+							//remove the last spaces
+							
+							//var paddingKnits = (stitches - lineLengthTrimmed)/2;
+							
+							//alert(paddingKnits);
+							
+							//for (var e = ''; e.length < paddingKnits;) { e += '□'; }
+							
+							pattern += lineResult.substring(0, lineLengthTrimmed) + "(" + lineLengthTrimmed + "/" + tempResultLength + ")<br/>";
+							lineResult = '';
+						} else {
+							
+							lineResult += '□□□□□□' + "(" + lineLengthTrimmed + ")";
+						}
+						
+						
+						
+					} else {
+						res += val[i] + '□□□';
+						lineResult += val[i] + '□□□';
+					}
+					
 				});
+				
+				//add the last line to the pattern
+				pattern += lineResult + " (" + lineResult.length + ")";
 
 				if (res.match(/undefined/gi)){
 					res = '&nbsp;';
@@ -57,7 +102,7 @@
 				
 				var stRows = rows.toString();
 				
-				res += "<br/>" + stRows + " rows";
+				res += "<br/>" + stRows + " rows <br/> (original string: " + str + ", " + stitches + " stitches)";
 				
 			}
 			else if (option === "decode"){
@@ -74,6 +119,8 @@
 			else {
 				res = 'error';
 			}
+			
+			res += "<br/>laid out pattern:<br/><br/>" + pattern;
 
 			return res;
 		}
