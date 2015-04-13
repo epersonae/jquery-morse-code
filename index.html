@@ -5,15 +5,17 @@
 	<title> jQuery Morse Code - Demo </title>
 	<meta name="keywords" content="jquery, morse, code, encrypt, decrypt, mvrilo, murilo, santana, plugin" />
 	<meta name="author" content="Murilo Santana" />
+	<style type="text/css">
+		p { outline: 1px solid lime; }
+		</style>
 </head>
 <body>
-	<h1>hello world!</h1>
-	<h2></h2>
+	<p></p>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="jquery-morse-code.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('h2').html($.morse('fortune favors the brave',100));
+		$('p').html($.morse('fortune favors the brave',100));
 	});
 </script>
 </body>
